@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> Nirvana's Birthday</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+          $( document ).ready(() => {
+              $(".envelope-wrapper .heart").click(() => {
+                $('.envelope-wrapper').addClass('flap')
+              });
+    
+              $(".envelope-wrapper .close-icon").click(() => {
+                $('.envelope-wrapper').removeClass('flap')
+              });
+            });
+        </script>
+    
+    </head>
+
+    <body>
+        <div class="bg-wrapper">
+            <div class="envelope-wrapper">
+              <div class="envelope">
+                <div class="card">
+                  <span class="close-icon">✖️</span>
+                  <div class="text">
+                    <h1>Nirvana &hearts;</h1>
+                    <p> Happy 7th Birthday! Click on the <div class="button" onclick="location.href = 'Nirvana.html'"></div> button to go to your very own website. </p>
+                  </div>
+                </div>
+              </div>
+              <div class="heart"></div>
+            </div>
+          </div>
+          
+
+    </body>
+</html>
