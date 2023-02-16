@@ -1,6 +1,6 @@
 body{
-  background-image: url(images/rainbow.jpg);
-  background-repeat: round;
+  background-image: url(images/rainbowbg.png);
+  background-size: 30%;
 }
 
 .bg-wrapper {
@@ -17,7 +17,7 @@ body{
   position: relative;
   width: 350px;
   height: 250px;
-  border: 2px solid #756a6a;
+  border: 2px solid #9b5a5a;
 }
 .bg-wrapper .envelope-wrapper .envelope:before {
   content: "";

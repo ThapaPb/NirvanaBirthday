@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="style1.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.0.943/pdf.min.js"></script>
+  </head>
+  <body>
+    <div class="header">
+      <div class="logo">
+        <img src="images/nirvanalogo.png" alt="Website logo" />
+      </div>
+      <div class="links">
+        <p><a href="Nirvana.html">Nirvana</a></p>
+        <p><a href="Gallery.html">Gallery</a></p>
+        <p><a href="Familytree.html">Family Tree</a></p>
+        <p><a href="Story.html">Story Time</a></p>
+      </div>
+    </div>
+
+    <div id="my_pdf_viewer">
+      <div id="canvas_container">
+        <canvas id="pdf_renderer"></canvas>
+      </div>
+      <div id="navigation_controls">
+        <button id="go_previous">Previous</button>
+        <input id="current_page" value="1" type="number" />
+        <button id="go_next">Next</button>
+      </div>
+      <div id="zoom_controls">
+        <button id="zoom_in">+</button>
+        <button id="zoom_out">-</button>
+      </div>
+    </div>
+
+    <script>
+      var myState = {
+        pdf: null,
+        currentPage: 1,
+        zoom: 1,
+      };
+
+      pdfjsLib.getDocument('./PeteTheCat.pdf').then((pdf) => {
+        myState.pdf = pdf;
+        render();
+      });
+
+      function render() {
+        myState.pdf.getPage(myState.currentPage).then((page) => {
+          var canvas = document.getElementById('pdf_renderer');
+          var ctx = canvas.getContext('2d');
+
+          var viewport = page.getViewport(myState.zoom);
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+
+          page.render({
+            canvasContext: ctx,
+            viewport: viewport,
+          });
+        });
+      }
+
+      document.getElementById('go_previous').addEventListener('click', function () {
+        if (myState.currentPage === 1) {
+          return;
+        }
+        myState.currentPage -= 1;
+        document.getElementById('current_page').value = myState.currentPage;
+        render();
+      });
+
+      document.getElementById('go_next').addEventListener('click', function () {
+        if (myState.currentPage === myState.pdf._pdfInfo.numPages) {
+          return;
+        }
+        myState.currentPage += 1;
+        document.getElementById('current_page').value = myState.currentPage;
+        render();
+      });
+
+      document
+        .getElementById('current_page')
+        .addEventListener('keypress', function (e) {
+          if (e.keyCode === 13) {
+            var targetPage = parseInt(e.target.value);
+            if (targetPage < 1 || targetPage > myState.pdf._pdfInfo.numPages) {
+              alert('Please enter a valid page number.');
+              return;
+            }
+            myState.currentPage = targetPage;
+            render();
+          }
+        });
+
+      document.getElementById('zoom_in').addEventListener('click', function () {
+        myState.zoom += 0.1;
+        render();
+      });
+
+      document.getElementById('zoom_out').addEventListener('click', function () {
+        myState.zoom -= 0.1;
+        render();
+      });
+    </script>
+
+
+
+
+        <div class="footer">
+            Nirvana's Seventh Birthday &hearts; 2023
+        </div>
+        
+    </body>
+</html>
